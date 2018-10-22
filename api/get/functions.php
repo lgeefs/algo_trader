@@ -10,81 +10,81 @@
 
     }
 
-    function get_option_chain($symbol_id) {
+    /***************************
+     * option_chain::get
+     * 
+     * GET https://api01.iq.questrade.com/v1/symbols/9291/options
+     * 
+     * Sample Response:
+     *{
+     *  "options": [
+     *  	{ 
+     *  		"expiryDate": "2015-01-17T00:00:00.000000-05:00", 
+     *  		"description": "BANK OF MONTREAL", 
+     *  		"listingExchange": "MX", 
+     *  		"optionExerciseType": "American", 
+     *  		"chainPerRoot": [
+     *  			{
+     *  				"root": "BMO",
+     *  				"chainPerStrikePrice": [
+     *  					{
+     *  						"strikePrice": 60, 
+     *  						"callSymbolId": 6101993, 
+     *  						"putSymbolId": 6102009 
+     *  					},
+     *  					{
+     *  						"strikePrice": 62, 
+     *  						"callSymbolId": 6101994, 
+     *  						"putSymbolId": 6102010 
+     *  					},
+     *  					{
+     *  						"strikePrice": 64, 
+     *  						"callSymbolId": 6101995, 
+     *  						"putSymbolId": 6102011 
+     *  					},
+     *  					... 
+     *  				],
+     *  				"multiplier": 100
+     *  			}
+     *  		]
+     *  	}
+     *  ]
+     *  
+     * }
+     * 
+     */
 
-        /***************************
-         * option_chain::get
-         * 
-         * GET https://api01.iq.questrade.com/v1/symbols/9291/options
-         * 
-         * Sample Response:
-         *{
-         *  "options": [
-         *  	{ 
-         *  		"expiryDate": "2015-01-17T00:00:00.000000-05:00", 
-         *  		"description": "BANK OF MONTREAL", 
-         *  		"listingExchange": "MX", 
-         *  		"optionExerciseType": "American", 
-         *  		"chainPerRoot": [
-         *  			{
-         *  				"root": "BMO",
-         *  				"chainPerStrikePrice": [
-         *  					{
-         *  						"strikePrice": 60, 
-         *  						"callSymbolId": 6101993, 
-         *  						"putSymbolId": 6102009 
-         *  					},
-         *  					{
-         *  						"strikePrice": 62, 
-         *  						"callSymbolId": 6101994, 
-         *  						"putSymbolId": 6102010 
-         *  					},
-         *  					{
-         *  						"strikePrice": 64, 
-         *  						"callSymbolId": 6101995, 
-         *  						"putSymbolId": 6102011 
-         *  					},
-         *  					... 
-         *  				],
-         *  				"multiplier": 100
-         *  			}
-         *  		]
-         *  	}
-         *  ]
-         *  
-         * }
-         * 
-         */
+    function get_option_chain($symbol_id) {
 
         $url = $_SESSION['api_server']."v1/symbols/$symbol_id/options";
 
         return QTrade::get($url);
 
     }
+    
+    /*Sample Request:
+    * POST https://api01.iq.questrade.com/v1/markets/quotes/options
+    *{
+    *    "filters": [
+    *        {
+    *            "optionType": "Call",
+    *            "underlyingId": 27426,
+    *            "expiryDate": "2017-01-20T00:00:00.000000-05:00",
+    *            "minstrikePrice": 70,
+    *            "maxstrikePrice": 80
+    *        },
+    *        ...
+    *    ],
+    *    "optionIds":
+    *        [
+    *            9907637,
+    *            9907638,
+    *            ...
+    *        ]
+    *}
+    */
 
     function get_option_data($filters = [], $option_ids = []) {
-        
-        /*Sample Request:
-        * POST https://api01.iq.questrade.com/v1/markets/quotes/options
-        *{
-        *    "filters": [
-        *        {
-        *            "optionType": "Call",
-        *            "underlyingId": 27426,
-        *            "expiryDate": "2017-01-20T00:00:00.000000-05:00",
-        *            "minstrikePrice": 70,
-        *            "maxstrikePrice": 80
-        *        },
-        *        ...
-        *    ],
-        *    "optionIds":
-        *        [
-        *            9907637,
-        *            9907638,
-        *            ...
-        *        ]
-        *}
-        */
 
         if (count($filters) < 1) {
             die("No filters provided.");
@@ -105,13 +105,13 @@
 
     }
 
-    function write_option_data_to_csv($symbol_id) {
+    /*************
+    * write all call/put option data to csv
+    * calls/{symbol}.csv
+    * puts/{symbol}.csv
+    */
 
-        /*************
-        * write all call/put option data to csv
-        * calls/{symbol}.csv
-        * puts/{symbol}.csv
-        */
+    function write_option_data_to_csv($symbol_id) {
 
         $symbol = '';
 
