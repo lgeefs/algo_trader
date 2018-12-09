@@ -380,6 +380,14 @@
 
     }
 
+    function get_historical_prices_date($symbol, $date) {
+
+        $endpoint = "/stock/$symbol/chart/date/$date";
+
+        return IEX::get($endpoint);
+
+    }
+
     function get_logo($symbol) {
 
         //Returns company logo lol

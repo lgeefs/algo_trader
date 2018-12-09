@@ -10,6 +10,6 @@
         die("Symbol must be provided");
     }
 
-    print_r(json_decode(get_dividends($symbol, $range), true));
+    print_r(get_dividends($symbol, $range));
 
 ?>

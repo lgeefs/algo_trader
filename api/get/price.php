@@ -9,6 +9,6 @@
         die("Symbol must be provided");
     }
 
-    print_r(json_decode(get_price($symbol), true));
+    print_r(get_price($symbol));
 
 ?>
